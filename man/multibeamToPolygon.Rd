@@ -2,22 +2,27 @@
 % Please edit documentation in R/MultibeamToPolygon_function.R
 \name{multibeamToPolygon}
 \alias{multibeamToPolygon}
-\title{Multibeam to polygon conversion}
+\title{multibeamToPolygon}
 \usage{
-multibeamToPolygon(multibeam = NULL, multibeamType = NA, polyfile = NULL,
-  polyformat = "ESRI Shapefile")
+multibeamToPolygon(multibeam = NULL, multibeamType = NA, NAVal = NULL,
+  polyfile = NULL, polyformat = "ESRI Shapefile")
 }
 \arguments{
 \item{multibeam}{Filepath to multibeam raster file. See gdalDrivers() for a list of readable formats. Default is NULL and function will then prompt for the file location using choose.files().}
 
-\item{multibeamType}{Raster type - should be 1 for RGB multi-band file, or 2 for floating point single band. Default is NULL and function will prompt for it using readline.}
+\item{multibeamType}{Raster type - should be 1 for RGB multi-band file, or 2 for floating point single band. Default is NA and function will prompt for it using readline().}
+
+\item{NAVal}{NA value of the input raster. This is required for floating point raster files. Default is NULL and function will prompt for a value using readline().}
 
 \item{polyfile}{Filepath and name for output file location. Default is NULL and function will then prompt for it using choose.dir() and readline().}
 
 \item{polyformat}{File type for output polygon file. Default is ESRI Shapefile. See ogrDrivers() for a list of available formats.}
 }
 \description{
-Converts a raster of multibeam data to a single dissolved polygons showing the outline of the data
+Converts a raster of multibeam data to a single multi-part polygon showing the outline of the data
+}
+\details{
+This function uses the Raster package to read in the raster file. The raster is then reclassified, setting all areas with data to 1. The reclassified raster is then converted to polygons using the gdal_polygonize function, and then dissolved to a single polygon using ogr2ogr. Both of these commands run in the OSGeo4W batch file that is included in the QGIS installation - if you have QGIS installed somewhere other than D:/Programs the function will prompt you for the location of the OSGeo4W.bat file.
 }
 \author{
 James Hutchison

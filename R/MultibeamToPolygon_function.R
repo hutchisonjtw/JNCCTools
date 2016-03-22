@@ -1,14 +1,16 @@
-#' Multibeam to polygon conversion
+#' multibeamToPolygon
 #'
-#' Converts a raster of multibeam data to a single dissolved polygons showing the outline of the data
+#' Converts a raster of multibeam data to a single multi-part polygon showing the outline of the data
 #' @author James Hutchison
 #' @param multibeam Filepath to multibeam raster file. See gdalDrivers() for a list of readable formats. Default is NULL and function will then prompt for the file location using choose.files().
-#' @param multibeamType Raster type - should be 1 for RGB multi-band file, or 2 for floating point single band. Default is NULL and function will prompt for it using readline.
+#' @param multibeamType Raster type - should be 1 for RGB multi-band file, or 2 for floating point single band. Default is NA and function will prompt for it using readline().
+#' @param NAVal NA value of the input raster. This is required for floating point raster files. Default is NULL and function will prompt for a value using readline().
 #' @param polyfile Filepath and name for output file location. Default is NULL and function will then prompt for it using choose.dir() and readline().
 #' @param polyformat File type for output polygon file. Default is ESRI Shapefile. See ogrDrivers() for a list of available formats.
+#' @details This function uses the Raster package to read in the raster file. The raster is then reclassified, setting all areas with data to 1. The reclassified raster is then converted to polygons using the gdal_polygonize function, and then dissolved to a single polygon using ogr2ogr. Both of these commands run in the OSGeo4W batch file that is included in the QGIS installation - if you have QGIS installed somewhere other than D:/Programs the function will prompt you for the location of the OSGeo4W.bat file.
 #' @export
 
-multibeamToPolygon <- function(multibeam=NULL, multibeamType=NA, polyfile=NULL, polyformat='ESRI Shapefile') {
+multibeamToPolygon <- function(multibeam=NULL, multibeamType=NA, NAVal=NULL, polyfile=NULL, polyformat='ESRI Shapefile') {
 if (is.null(multibeam)) multibeam <- choose.files(caption="Select multibeam raster", multi=FALSE)
 while (!(multibeamType %in% c(1,2))) {
 multibeamType <- as.numeric(readline('Please enter 1 or 2 for type of multibeam file: \n 1. RGB (multi-band file) \n 2. Single-band floating point \n'))
@@ -37,7 +39,7 @@ if (multibeamType==1) {
    print(noquote("Reclassifying raster..."))
    flush.console()
    inRaster <- raster(multibeam)
-   NAvalue(inRaster) <- as.numeric(readline(prompt="Please type NA value of raster (e.g. -9999): "))
+   ifelse(is.null(NAVal), NAvalue(inRaster) <- as.numeric(readline(prompt="Please type NA value of raster (e.g. -9999): ")), NAValue(inRaster) <- NAVal)
    minval <- cellStats(inRaster, min)
    maxval <- cellStats(inRaster, max)
    reclassificationMat <- matrix(c(minval, maxval, 1), ncol=3, byrow=TRUE)
