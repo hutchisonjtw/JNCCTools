@@ -13,6 +13,9 @@ invasivesCheck(invasives, file, worksheet)
 
 \item{worksheet}{Number or name of the worksheet in the excel file to be checked.}
 }
+\value{
+A data frame containing the rows from the worksheet searched where invasive species names were found.
+}
 \description{
 invasivesCheck
 }

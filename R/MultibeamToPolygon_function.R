@@ -20,8 +20,8 @@ flush.console()
 if(is.null(polyfile)) polyfile <- paste0(choose.dir(caption="Choose output file location"),"\\",readline(prompt="Type filename without file extension: "))
 rasterloaded <- require(raster)
 rgdalloaded <- require(rgdal)
-if (!isTRUE(rasterloaded)) stop("Error: Package 'raster' could not be loaded - is it installed?")
-if (!isTRUE(rgdalloaded)) stop("Error: Package 'rgdal' could not be loaded - is it installed?")
+if (!isTRUE(rasterloaded)) stop("Package 'raster' could not be loaded. is it installed?")
+if (!isTRUE(rgdalloaded)) stop("Package 'rgdal' could not be loaded. is it installed?")
 
 tempras <- tempfile(fileext=".tif")
 
