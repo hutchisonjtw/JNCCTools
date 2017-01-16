@@ -4,7 +4,7 @@
 #'
 #' @param x Numeric vector of data values to be plotted to be plotted as a histogram.
 #' @param main Title for the plot. Default value is \code{"QQ plot of sample data against likely distributions"}.
-#' @param distr Character vector of distributions for which to produce QQ plots. Note that this uses the standard R names for the distributions which differ from those used in \code{emon}. Should be one or more of \code{"norm"} (normal), \code{"pois"} (Poisson), \code"lnorm"} (log normal) and \code{"nbinom"} (negative binomial). By default all four are plotted.
+#' @param distr Character vector of distributions for which to produce QQ plots. Note that this uses the standard R names for the distributions which differ from those used in \code{emon}. Should be one or more of \code{"norm"} (normal), \code{"pois"} (Poisson), \code{"lnorm"} (log normal) and \code{"nbinom"} (negative binomial). By default all four are plotted.
 #' @details QQ plots are used to visually assess how well a data sample fits a given probability distribution.
 #' @return Primarily used for plotting, but invisibly returns an object of class multiQQ, which can be stored for later plotting if required.
 #' @export

@@ -4,7 +4,7 @@
 \alias{plot.multiQQ}
 \title{plot.multiQQ}
 \usage{
-\method{plot}{multiQQ}(x)
+\method{plot}{multiQQ}(x, y, ...)
 }
 \arguments{
 \item{x}{\code{multiQQ} object for plotting.}

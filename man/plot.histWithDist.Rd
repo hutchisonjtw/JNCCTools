@@ -4,7 +4,7 @@
 \alias{plot.histWithDist}
 \title{plot.histWithDist}
 \usage{
-\method{plot}{histWithDist}(x)
+\method{plot}{histWithDist}(x, y, ...)
 }
 \arguments{
 \item{x}{\code{histWithDist} object}

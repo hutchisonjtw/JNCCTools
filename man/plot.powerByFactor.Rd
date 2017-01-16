@@ -4,7 +4,7 @@
 \alias{plot.powerByFactor}
 \title{plot.powerByFactor}
 \usage{
-\method{plot}{powerByFactor}(x)
+\method{plot}{powerByFactor}(x, y, ...)
 }
 \arguments{
 \item{x}{\code{powerByFactor} object}

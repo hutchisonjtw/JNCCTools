@@ -10,9 +10,9 @@ multiQQPlot(x, main = "QQ plot of sample data against likely distributions",
 \arguments{
 \item{x}{Numeric vector of data values to be plotted to be plotted as a histogram.}
 
-\item{main}{Title for the plot. Default value is "QQ plot of sample data against likely distributions".}
+\item{main}{Title for the plot. Default value is \code{"QQ plot of sample data against likely distributions"}.}
 
-\item{distr}{Character vector of distributions for which to produce QQ plots. Note that this uses the standard R names for the distributions which differ from those used in emon. Should be one or more of "norm" (normal), "pois" (Poisson), "lnorm" (log normal) and "nbinom" (negative binomial). By default all four are plotted.}
+\item{distr}{Character vector of distributions for which to produce QQ plots. Note that this uses the standard R names for the distributions which differ from those used in \code{emon}. Should be one or more of \code{"norm"} (normal), \code{"pois"} (Poisson), \code{"lnorm"} (log normal) and \code{"nbinom"} (negative binomial). By default all four are plotted.}
 }
 \value{
 Primarily used for plotting, but invisibly returns an object of class multiQQ, which can be stored for later plotting if required.
