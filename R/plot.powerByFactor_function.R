@@ -6,7 +6,7 @@
 #' @details Plots graphs of statistical power (i.e. proportion of significant results) against number of samples from a \code{powerByFactor} object.
 #' @export
 
-plot.powerByFactor <- function(x) {
+plot.powerByFactor <- function(x, y, ...) {
   titles <- names(x$result)
   panelCols <- round(sqrt(length(titles)))
   panelRows <- ceiling(length(titles)/panelCols)
