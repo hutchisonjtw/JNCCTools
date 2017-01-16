@@ -37,7 +37,8 @@ if (multibeamType==1) {
    flush.console()
    inRaster <- stack(multibeam)                                                   ## Read in raster
    inRasterSummed <- inRaster[[1]]+ inRaster[[2]]+ inRaster[[3]]
-   binary0 <- clamp(inRasterSummed, upper=1)
+   inRasterNA0 <- reclassify(inRasterSummed, cbind(765, 0))
+   binary0 <- clamp(inRasterNA0, upper=1)
    binary <- clamp(binary0, lower=1, useValues=FALSE)
    writeRaster(binary, file=tempras, format="GTiff", datatype="INT2S")
    print(noquote("Complete! Generating polygons..."))
