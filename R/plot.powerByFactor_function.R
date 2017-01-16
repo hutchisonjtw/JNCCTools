@@ -4,7 +4,7 @@
 #'
 #' @param x \code{powerByFactor} object
 #' @details Plots graphs of statistical power (i.e. proportion of significant results) against number of samples from a \code{powerByFactor} object.
-#'
+#' @export
 
 plot.powerByFactor <- function(x) {
   titles <- names(x$result)

@@ -22,6 +22,13 @@ rasterloaded <- require(raster)
 rgdalloaded <- require(rgdal)
 if (!isTRUE(rasterloaded)) stop("Package 'raster' could not be loaded. is it installed?")
 if (!isTRUE(rgdalloaded)) stop("Package 'rgdal' could not be loaded. is it installed?")
+if(file.exists("D:/Programs/QGIS/OSGeo4W.bat")){                                                                  ## Check for OSGeo4W.bat
+  OSGeo4W <- "D:/Programs/QGIS/OSGeo4W.bat"                                                                      ## If present assign path to variable
+}
+else {
+  warning("OSGeo4W.bat file not found. Please enter OSGeo4W.bat file location...")                                ## If not present in that location, ask user for path
+  OSGeo4W <- readline(prompt="OSGeo4W.bat file location: ")
+}
 
 tempras <- tempfile(fileext=".tif")
 
@@ -33,7 +40,7 @@ if (multibeamType==1) {
    binary0 <- clamp(inRasterSummed, upper=1)
    binary <- clamp(binary0, lower=1, useValues=FALSE)
    writeRaster(binary, file=tempras, format="GTiff", datatype="INT2S")
-   print(noquote("Complete!"))
+   print(noquote("Complete! Generating polygons..."))
    flush.console()
 } else {
    print(noquote("Reclassifying raster..."))
@@ -44,20 +51,10 @@ if (multibeamType==1) {
    maxval <- cellStats(inRaster, max)
    reclassificationMat <- matrix(c(minval, maxval, 1), ncol=3, byrow=TRUE)
    binary <- reclassify(inRaster, reclassificationMat, right=NA, filename=tempras, format="GTiff", datatype="INT2S")
-   print(noquote("Complete!"))
+   print(noquote("Complete! Generating polygons..."))
    flush.console()
 }
 
-rgdalloaded <- require(rgdal)
-if(!isTRUE(rgdalloaded)) stop("Package rgdal could not be loaded. Polygons will not be read into R")
-
-if(file.exists("D:/Programs/QGIS/OSGeo4W.bat")){                                                                  ## Check for OSGeo4W.bat
-   OSGeo4W <- "D:/Programs/QGIS/OSGeo4W.bat"                                                                      ## If present assign path to variable
-   }
-else {
-   warning("OSGeo4W.bat file not found. Please enter OSGeo4W.bat file location...")                                ## If not present in that location, ask user for path
-   OSGeo4W <- readline(prompt="OSGeo4W.bat file location: ")
-   }
 func <- "gdal_polygonize"
 system2(OSGeo4W, args=(sprintf('"%1$s" "%2$s" -f "%3$s" "%4$s.shp"', func, tempras, polyformat, paste0(polyfile, "_undissolved"))))       ## Produce shapefile from temporary file with OSgeo4W gdal-polygonize
 file.remove(tempras)                                                                                              ## Delete temporary raster
