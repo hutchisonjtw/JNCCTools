@@ -1,7 +1,7 @@
 Package: JNCCTools
 Type: Package
 Title: A Package to Store Useful Functions for JNCC Staff
-Version: 0.1.0
+Version: 0.2.0
 Author: James Hutchison <james.hutchison@jncc.gov.uk>
 Maintainer: James Hutchison <james.hutchison@jncc.gov.uk>
 Description: This is a package to store and share R functions written by JNCC
