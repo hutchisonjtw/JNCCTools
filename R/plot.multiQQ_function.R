@@ -1,10 +1,3 @@
-#' plot.multiQQ
-#'
-#' Plotting method for multiQQ object
-#'
-#' @author James Hutchison
-#' @param x \code{multiQQ} object for plotting.
-#' @details Generates quantile-quantile plot with 1:1 line from \code{multiQQ} object.
 #' @export
 
 plot.multiQQ <- function(x, y, ...) {

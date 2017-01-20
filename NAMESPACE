@@ -3,6 +3,7 @@
 S3method(plot,histWithDist)
 S3method(plot,multiQQ)
 S3method(plot,powerByFactor)
+S3method(print,powerByFactor)
 export(histWithDist)
 export(invasivesCheck)
 export(multiQQPlot)

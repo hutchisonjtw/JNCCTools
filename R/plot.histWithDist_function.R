@@ -1,10 +1,3 @@
-#' plot.histWithDist
-#'
-#' Plotting method for \code{histWithDist} object class
-#'
-#' @author James Hutchison
-#' @param x \code{histWithDist} object
-#' @details Plots histogram with distribution curves and legend from \code{histWithDist} object.
 #' @export
 
 plot.histWithDist <- function(x, y, ...) {
