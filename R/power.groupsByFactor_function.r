@@ -15,13 +15,14 @@
 #' @param alpha The type 1 error for assessing statistical significance (default is 0.05) in the power simulations.
 #' @param nsims Number of repeat simulations to estimate power (default is 1000).
 #' @param nreps Number of repeat permutations for randomisation test (default is 999).
+#' @param target.power The desired power. This is not used in the calculation, but is passed into the resulting object and used to show the target line when the object is plotted.
 #' @details This function splits \code{x} into subsets based on \code{f}, then runs \code{power.groups} on each subset. \code{pars1} and \code{pars2} for \code{power.groups} are automatically calculated based on \code{x} and \code{distribution} using basic summary stats (e.g. \code{mean}, \code{sd}) or using \code{MASS::fitdistr} if \code{distribution = "Negbin"}.
 #' @return An object of class \code{powerByFactor}, which is essentially a list containing the power results for each level of \code{f}. The package includes methods to \code{plot() powerByFactor} objects.
 #' @export
 #'
 
 
-power.groupsByFactor <- function(x, f, change, change.type, n1, n2, distribution, test, alternative="two.sided", alpha=0.05, nsims=1000, nreps=999) {
+power.groupsByFactor <- function(x, f, change, change.type, n1, n2, distribution, test, alternative="two.sided", alpha=0.05, nsims=1000, nreps=999, target.power=0.8) {
   MASSLoaded <- require(MASS)
   if(!isTRUE(MASSLoaded)) stop("Package 'MASS' could not be loaded. Is it installed?")
   emonLoaded <- require(emon)
@@ -57,7 +58,7 @@ power.groupsByFactor <- function(x, f, change, change.type, n1, n2, distribution
     }
   } else stop("distr must be one of 'Normal', 'Poisson', 'Lognormal' or 'Negbin'")
   result <- mapply(power.groups, pars1 = pars_1, pars2 = pars_2, MoreArgs = list(change = change, change.type = change.type, n1 = n1, n2 = n2, distribution = distribution, test = test, alternative = alternative, alpha = alpha, nsims = nsims, nreps = nreps), SIMPLIFY = FALSE)
-  output <- list(result = result, nSample = n2, alpha = alpha)
+  output <- list(result = result, nSample = n2, alpha = alpha, target.power = target.power)
   class(output) <- "powerByFactor"
   return(output)
 }
