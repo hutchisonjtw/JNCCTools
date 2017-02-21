@@ -18,12 +18,20 @@ multiQQPlot <- function(x, main = "QQ plot of sample data against likely distrib
   probabilities <- 1:length(x)/(length(x) + 1)
   theoreticalProbs <- list()
   if ("nbinom" %in% distr) {
-    nbinomQuantiles <- cbind(sort(x), qnbinom(probabilities, size = fitdistr(x, "Negative Binomial")$estimate[1], mu = fitdistr(x, "Negative Binomial")$estimate[2]))
-    theoreticalProbs$nbinom <- nbinomQuantiles
+    if (is.integer(x)) {
+      nbinomQuantiles <- cbind(sort(x), qnbinom(probabilities, size = fitdistr(x, "Negative Binomial")$estimate[1], mu = fitdistr(x, "Negative Binomial")$estimate[2]))
+      theoreticalProbs$nbinom <- nbinomQuantiles
+    } else {
+      warning("Negative binomial requires integer data so will not be plotted")
+    }
   }
   if ("pois" %in% distr) {
-    poisQuantiles <- cbind(sort(x), qpois(probabilities, fitdistr(x, "Poisson")$estimate))
-    theoreticalProbs$pois <- poisQuantiles
+    if (is.integer(x)) {
+      poisQuantiles <- cbind(sort(x), qpois(probabilities, fitdistr(x, "Poisson")$estimate))
+      theoreticalProbs$pois <- poisQuantiles
+    } else {
+      warning("Poisson requires integer data so will not be plotted")
+    }
   }
   if ("norm" %in% distr) {
     normQuantiles <- cbind(sort(x), qnorm(probabilities, mean = fitdistr(x, "Normal")$estimate[1], sd = fitdistr(x, "Normal")$estimate[2]))
