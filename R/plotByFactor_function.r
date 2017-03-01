@@ -10,6 +10,14 @@
 
 plotByFactor <- function(x, f, plotFunction) {
   splitData <- split(x, f, drop=TRUE)
+  if (any(sapply(splitData, length)==1)) {
+    if (any(sapply(splitData, length)>1)) {
+      warning(paste("The following factor levels have only one value and will not be used: ", paste(names(which(sapply(splitData, length)==1), collapse=", "))))
+      splitData <- splitData[sapply(splitData, length) > 1]
+    } else {
+      stop("No level has more than one data value. Please check your data and re-run")
+    }
+  }
   panelCols <- round(sqrt(nlevels(f)))
   panelRows <- ceiling(nlevels(f)/panelCols)
   par(mfrow = c(panelRows, panelCols))
