@@ -22,14 +22,19 @@
 #'
 
 
-power.groupsByFactor <- function(x, f, change, change.type, n1, n2, distribution, test, alternative="two.sided", alpha=0.05, nsims=1000, nreps=999, target.power=0.8) {
+power.groupsByFactor <- function(x, f=NULL, change, change.type, n1, n2, distribution, test, alternative="two.sided", alpha=0.05, nsims=1000, nreps=999, target.power=0.8) {
   MASSLoaded <- require(MASS)
   if(!isTRUE(MASSLoaded)) stop("Package 'MASS' could not be loaded. Is it installed?")
   emonLoaded <- require(emon)
   if(!isTRUE(emonLoaded)) stop("Package 'emon' could not be loaded. Is it installed?")
   distrCheck <- distribution %in% c('Normal', 'Poisson', 'Lognormal', 'Negbin')
   if(any(!distrCheck)) stop("distr must be one of 'Normal', 'Poisson', 'Lognormal' or 'Negbin'. Other values are not permitted.")
-  splitData <- split(x, f, drop=TRUE)
+  if (!is.null(f){
+    splitData <- split(x, f, drop=TRUE)
+  } else {
+    splitData <- list(allData=x)
+  }
+
   if (distribution == "Normal") {
     pars_1.1 <- lapply(splitData, mean)
     pars_1.2 <- lapply(splitData, sd)
