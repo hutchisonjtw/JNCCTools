@@ -22,7 +22,7 @@ plotByFactor <- function(x, f, plotFunction) {
   panelCols <- round(sqrt(nlevels(f)))
   panelRows <- ceiling(nlevels(f)/panelCols)
   par(mfrow = c(panelRows, panelCols))
-  mapply(plotFunction, splitData, main = levels(f))
+  mapply(plotFunction, splitData, main = names(splitData))
   par(mfrow = c(1, 1))
   invisible(NULL)
 }
