@@ -29,11 +29,18 @@ power.groupsByFactor <- function(x, f=NULL, change, change.type, n1, n2, distrib
   if(!isTRUE(emonLoaded)) stop("Package 'emon' could not be loaded. Is it installed?")
   distrCheck <- distribution %in% c('Normal', 'Poisson', 'Lognormal', 'Negbin')
   if(any(!distrCheck)) stop("distr must be one of 'Normal', 'Poisson', 'Lognormal' or 'Negbin'. Other values are not permitted.")
+<<<<<<< HEAD
   if (!is.null(f)) {
+=======
+>>>>>>> 7794b81574e7586d782589448eb6e5fd10619b67
     splitData <- split(x, f, drop=TRUE)
   } else {
     splitData <- list(allData=x)
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7794b81574e7586d782589448eb6e5fd10619b67
   if (distribution == "Normal") {
     pars_1.1 <- lapply(splitData, mean)
     pars_1.2 <- lapply(splitData, sd)
