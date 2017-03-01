@@ -36,7 +36,7 @@ power.groupsByFactor <- function(x, f=NULL, change, change.type, n1, n2, distrib
   }
   if (any(sapply(splitData, length)==1)) {
     if (any(sapply(splitData, length)>1)) {
-      warning(paste("The following factor levels have only one value and will not be used: ", paste(names(which(sapply(splitData, length)==1), collapse=", "))))
+      warning(paste("The following factor levels have only one value and will not be used: ", paste(names(which(sapply(splitData, length)==1)), collapse=", ")))
       splitData <- splitData[sapply(splitData, length) > 1]
     } else {
       stop("No level has more than one data value. Please check your data and re-run")
