@@ -32,7 +32,18 @@ power.groupsByFactor <- function(x, f=NULL, change, change.type, n1, n2, distrib
   if (!is.null(f)) {
     splitData <- split(x, f, drop=TRUE)
   } else {
-    splitData <- list(allData=x)
+    splitData <- list(Power=x)
+  }
+  if (any(sapply(splitData, length)==1)) {
+    if (any(sapply(splitData, length)>1)) {
+      warning(paste("The following factor levels have only one value and will not be used: ", paste(names(which(sapply(splitData, length)==1), collapse=", "))))
+      splitData <- splitData[sapply(splitData, length) > 1]
+    } else {
+      stop("No level has more than one data value. Please check your data and re-run")
+    }
+  }
+  if (any(sapply(splitData, length)<=10)) {
+    warning(paste("The following factor levels have small data sets (10 values or fewer). Results will still be calculated but should be interpreted with caution: ", paste(names(which(sapply(splitData, length)<=10), collapse=", "))))
   }
   if (distribution == "Normal") {
     pars_1.1 <- lapply(splitData, mean)
@@ -43,6 +54,9 @@ power.groupsByFactor <- function(x, f=NULL, change, change.type, n1, n2, distrib
     pars_1 <- lapply(splitData, mean)
     pars_2 <- NULL
   } else if (distribution == "Lognormal") {
+    if (any(lapply(splitData, function(x) 0 %in% x))) {
+      stop(paste("The following levels contain 0s, so cannot be used with the lognormal distribution. Please correct the data then re-run: ", paste(names(which(sapply(splitData, function(x) 0 %in% x))), collapse=", ")))
+    }
     splitDataLog <- lapply(splitData, log)
     pars_1.1 <- lapply(splitDataLog, mean)
     pars_1.2 <- lapply(splitDataLog, sd)
