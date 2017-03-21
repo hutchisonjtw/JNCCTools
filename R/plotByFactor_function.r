@@ -18,10 +18,12 @@ plotByFactor <- function(x, f, plotFunction) {
       stop("No level has more than one data value. Please check your data and re-run")
     }
   }
-  panelCols <- round(sqrt(nlevels(f)))
-  panelRows <- ceiling(nlevels(f)/panelCols)
-  par(mfrow = c(panelRows, panelCols))
-  mapply(plotFunction, splitData, main = names(splitData))
-  par(mfrow = c(1, 1))
+  panelCols <- round(sqrt(nlevels(as.factor(f))))
+  panelRows <- ceiling(nlevels(as.factor(f))/panelCols)
+  par(mfrow = c(panelRows, panelCols), oma = c(2.5,0,0,0))
+  mapply(plotFunction, splitData, main = names(splitData), MoreArgs = list(legend = FALSE))
+  par(mfrow = c(1, 1), oma=c(0,0,0,0), new=TRUE)
+  plot(0:1, 0:1, type="n", xlab="", ylab="", axes=FALSE)
+  legend(0,-0.15, c("nbinom", "pois", "norm", "lnorm"), fill = 1:4, horiz=TRUE, xpd=NA)
   invisible(NULL)
 }
