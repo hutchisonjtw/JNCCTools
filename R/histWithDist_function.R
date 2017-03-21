@@ -16,6 +16,10 @@ histWithDist <- function(x, main = "Histogram with fitted distributions", distr 
   if(!isTRUE(MASSLoaded)) stop("Package 'MASS' could not be loaded. Is it installed?")
   distrCheck <- distr %in% c("nbinom", "pois", "norm", "lnorm")
   if(any(!distrCheck)) stop("distr must be one or more of 'norm', 'pois', 'lnorm', 'nbinom'. Other values are not permitted.")
+  if ("lnorm" %in% distr & any(x==0)) {
+    warning("Data contains 0s so lognormal distribution cannot be fitted. If you need the lognormal distribution please correct the data and try again")
+    distr <- distr[-which(distr=="lnorm")]
+  }
   h <- hist(x, plot=FALSE)
   distLines <- list()
   if ("nbinom" %in% distr) {
@@ -31,12 +35,8 @@ histWithDist <- function(x, main = "Histogram with fitted distributions", distr 
     distLines$normLine <- normLine
   }
   if ("lnorm" %in% distr) {
-    if (any(x==0)) {
-      warning("Data contains 0s so lognormal distribution cannot be fitted. If you need the lognormal distribution please correct the data and try again")
-    } else {
-      lnormLine <- matrix(c(0:max(h$breaks), dlnorm(0:max(h$breaks), meanlog = fitdistr(x, "Lognormal")$estimate[1], sdlog = fitdistr(x, "Lognormal")$estimate[2])), ncol = 2)
+    lnormLine <- matrix(c(0:max(h$breaks), dlnorm(0:max(h$breaks), meanlog = fitdistr(x, "Lognormal")$estimate[1], sdlog = fitdistr(x, "Lognormal")$estimate[2])), ncol = 2)
     distLines$lnormLine <- lnormLine
-    }
   }
   if (length(distLines) == 0) stop("distr must be one or more of 'norm', 'pois', 'lnorm', 'nbinom'")
   ymax <- max(sapply(distLines, FUN = function(x) max(x[ ,2])))
