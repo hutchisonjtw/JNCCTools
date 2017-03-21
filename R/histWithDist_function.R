@@ -43,7 +43,7 @@ histWithDist <- function(x, main = "Histogram with fitted distributions", distr 
   ymax <- max(c(ymax, h$density))
   plot(h, freq=FALSE, main = main, xlim = c(0, max(h$breaks)), ylim = c(0,ymax))
   mapply(lines, distLines, col = 1:length(distLines))
-  if(legend) {legend("topright", distr, col = 1::length(distLines), lty = 1)}
+  if(legend) {legend("topright", distr, col = 1:length(distLines), lty = 1)}
   output <- list(histogram = h, curves = distLines, distr = distr, main = main)
   class(output) <- "histWithDist"
   invisible(output)
