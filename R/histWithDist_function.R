@@ -11,7 +11,7 @@
 #' @export
 #'
 
-histWithDist <- function(x, main = "Histogram with fitted distributions", distr = c("nbinom", "pois", "norm", "lnorm")) {
+histWithDist <- function(x, main = "Histogram with fitted distributions", distr = c("nbinom", "pois", "norm", "lnorm"), legend = TRUE) {
   MASSLoaded <- require(MASS)
   if(!isTRUE(MASSLoaded)) stop("Package 'MASS' could not be loaded. Is it installed?")
   distrCheck <- distr %in% c("nbinom", "pois", "norm", "lnorm")
@@ -31,15 +31,18 @@ histWithDist <- function(x, main = "Histogram with fitted distributions", distr 
     distLines$normLine <- normLine
   }
   if ("lnorm" %in% distr) {
-    lnormLine <- matrix(c(0:max(h$breaks), dlnorm(0:max(h$breaks), meanlog = fitdistr(x, "Lognormal")$estimate[1], sdlog = fitdistr(x, "Lognormal")$estimate[2])), ncol = 2)
+    if (any(x==0)) {
+      warning("Data contains 0s so lognormal distribution cannot be fitted. If you need the lognormal distribution please correct the data and try again")
+    } else {
+      lnormLine <- matrix(c(0:max(h$breaks), dlnorm(0:max(h$breaks), meanlog = fitdistr(x, "Lognormal")$estimate[1], sdlog = fitdistr(x, "Lognormal")$estimate[2])), ncol = 2)
     distLines$lnormLine <- lnormLine
-  }
+    }
   if (length(distLines) == 0) stop("distr must be one or more of 'norm', 'pois', 'lnorm', 'nbinom'")
   ymax <- max(sapply(distLines, FUN = function(x) max(x[ ,2])))
   ymax <- max(c(ymax, h$density))
   plot(h, freq=FALSE, main = main, xlim = c(0, max(h$breaks)), ylim = c(0,ymax))
   mapply(lines, distLines, col = 1:4)
-  legend("topright", distr, col = 1:4, lty = 1)
+  if(legend) {legend("topright", distr, col = 1:4, lty = 1)}
   output <- list(histogram = h, curves = distLines, distr = distr, main = main)
   class(output) <- "histWithDist"
   invisible(output)
