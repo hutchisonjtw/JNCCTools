@@ -7,7 +7,7 @@
 #' @param main Title for the plot. Default value is \code{"Histogram with fitted distributions"}.
 #' @param distr Character vector of distribution curves to overlay on the histogram. Note that this uses the standard R names for the distributions which differ from those used in emon. Should be one or more of "norm" (normal), "pois" (Poisson), "lnorm" (log normal) and "nbinom" (negative binomial). By default all four are plotted.
 #' @details This function uses \code{MASS::fitdistr} to fit distribution curves to \code{x} for the distributions specified, then overlays these on a histogram of \code{x}.
-#' @return Primarily used directly plotting, but also invisibly returns a \code{histWithDist} object that can be stored for later plotting if needed.
+#' @return Primarily used directly for plotting, but also invisibly returns a \code{histWithDist} object that can be stored for later plotting if needed.
 #' @export
 #'
 
