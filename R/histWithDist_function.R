@@ -37,6 +37,7 @@ histWithDist <- function(x, main = "Histogram with fitted distributions", distr 
       lnormLine <- matrix(c(0:max(h$breaks), dlnorm(0:max(h$breaks), meanlog = fitdistr(x, "Lognormal")$estimate[1], sdlog = fitdistr(x, "Lognormal")$estimate[2])), ncol = 2)
     distLines$lnormLine <- lnormLine
     }
+  }
   if (length(distLines) == 0) stop("distr must be one or more of 'norm', 'pois', 'lnorm', 'nbinom'")
   ymax <- max(sapply(distLines, FUN = function(x) max(x[ ,2])))
   ymax <- max(c(ymax, h$density))
