@@ -24,6 +24,6 @@ plotByFactor <- function(x, f, plotFunction) {
   mapply(plotFunction, splitData, main = names(splitData), MoreArgs = list(legend = FALSE))
   par(mfrow = c(1, 1), oma=c(0,0,0,0), new=TRUE)
   plot(0:1, 0:1, type="n", xlab="", ylab="", axes=FALSE)
-  legend(0,-0.15, c("nbinom", "pois", "norm", "lnorm"), fill = 1:4, horiz=TRUE, xpd=NA)
+  legend(0,-0.18, c("nbinom", "pois", "norm", "lnorm"), fill = 1:4, horiz=TRUE, xpd=NA)
   invisible(NULL)
 }
