@@ -6,4 +6,3 @@ print.powerByFactor <- function(x, ...) {
   print(final)
   invisible(NULL)
 }
-
