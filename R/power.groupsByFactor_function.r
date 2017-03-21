@@ -43,7 +43,7 @@ power.groupsByFactor <- function(x, f=NULL, change, change.type, n1, n2, distrib
     }
   }
   if (any(sapply(splitData, length)<=10)) {
-    warning(paste("The following factor levels have small data sets (10 values or fewer). Results will still be calculated but should be interpreted with caution: ", paste(names(which(sapply(splitData, length)<=10), collapse=", "))))
+    warning(paste("The following factor levels have small data sets (10 values or fewer). Results will still be calculated but should be interpreted with caution: ", paste(names(which(sapply(splitData, length)<=10)), collapse=", ")))
   }
   if (distribution == "Normal") {
     pars_1.1 <- lapply(splitData, mean)
