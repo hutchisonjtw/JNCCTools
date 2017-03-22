@@ -48,20 +48,20 @@ power.groupsByFactor <- function(x, f=NULL, change, change.type, n1, n2, distrib
   if (distribution == "Normal") {
     pars_1.1 <- lapply(splitData, mean)
     pars_1.2 <- lapply(splitData, sd)
-    pars_2 <- pars1.2
-    pars_1 <- mapply(c, pars1.1, pars1.2, SIMPLIFY = FALSE)
+    pars_2 <- pars_1.2
+    pars_1 <- mapply(c, pars_1.1, pars_1.2, SIMPLIFY = FALSE)
   } else if (distribution == "Poisson") {
     pars_1 <- lapply(splitData, mean)
     pars_2 <- NULL
   } else if (distribution == "Lognormal") {
-    if (any(lapply(splitData, function(x) 0 %in% x))) {
+    if (any(sapply(splitData, function(x) 0 %in% x))) {
       stop(paste("The following levels contain 0s, so cannot be used with the lognormal distribution. Please correct the data then re-run: ", paste(names(which(sapply(splitData, function(x) 0 %in% x))), collapse=", ")))
     }
     splitDataLog <- lapply(splitData, log)
     pars_1.1 <- lapply(splitDataLog, mean)
     pars_1.2 <- lapply(splitDataLog, sd)
-    pars_2 <- pars1.2
-    pars_1 <- mapply(c, pars1.1, pars1.2, SIMPLIFY = FALSE)
+    pars_2 <- pars_1.2
+    pars_1 <- mapply(c, pars_1.1, pars_1.2, SIMPLIFY = FALSE)
   } else if (distribution == "Negbin") {
     NegbinPars <- function(x) {fitdistr(x, "Negative Binomial")$estimate}
     pars_1 <-  lapply(splitData, FUN = function(x) NegbinPars(x)[c(2,1)])
